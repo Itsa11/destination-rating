@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+
+    <py-config>
+        packages = ["matplotlib", "pandas","scikit-learn"]
+        terminal =false
+      </py-config>
+
+    <body>
+
+<h1>Welcome</h1>
+    
+<div class="row">
+<div class="col-1">
+</div>
+<div class="col-5">
+  <p><h4 id="show" style="color: orange;"></h4></p>
+<py-script output="show" src="main.py">
+
+
+
+</py-script>
+</div>
+
+<div class="col-5">
+  <body>
+      <center>
+            
+          <div>
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.275342297307!2d73.85393251489265!3d18.5164554874114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c06fa5b442ff%3A0x9df365f5b648bce1!2sShreemant%20Dagdusheth%20Halwai%20Ganpati%20Mandir!5e0!3m2!1sen!2sin!4v1683027465904!5m2!1sen!2sin" 
+ width="600" height="700" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+      </center>
+  </body>
+    </div>  
+<div class="col-1"></div>
+  </div>   
+</body>
+</html>
+
+<!--      i, ' . ' ,                                   , ' - ' , City_from_index           -->
+<!-- ' Enter your favourite destination name : '    -->
+<!--  
+
+
+import numpy as np
+  import pandas as pd
+  from sys import stdout
+  from sklearn.feature_extraction.text import TfidfVectorizer
+  from sklearn.metrics.pairwise import cosine_similarity
+  from pyodide.http import open_url 
+
+  data = pd.read_csv(open_url("https://raw.githubusercontent.com/Aditya-Holkar/django_first/master/Destiny.csv"))
+
+  data['Rating']=data['Rating'].apply(str)
+
+  selected_features = ['Place','City']
+
+  combined_features = data['Place']+' '+data['City']
+  
+  vectorizer = TfidfVectorizer()
+
+  feature_vectors = vectorizer.fit_transform(combined_features)
+  
+  similarity = cosine_similarity(feature_vectors)
+  
+  name = input()
+  
+  list_of_all_Places = data['City'].tolist()
+  
+  def levenshtein_distance(s, t):
+      m, n = len(s), len(t)
+      d = [[0] * (n + 1) for _ in range(m + 1)]
+      for i in range(1, m + 1):
+          d[i][0] = i
+      for j in range(1, n + 1):
+          d[0][j] = j
+      for j in range(1, n + 1):
+          for i in range(1, m + 1):
+              if s[i - 1] == t[j - 1]:
+                  cost = 0
+              else:
+                  cost = 1
+              d[i][j] = min(d[i - 1][j] + 1,  # deletion
+                            d[i][j - 1] + 1,  # insertion
+                            d[i - 1][j - 1] + cost)  # substitution
+      return d[m][n]
+  
+  def get_close_matches(query, choices, n=3):
+      distances = [(levenshtein_distance(query, word), word) for word in choices]
+      matches = [word for distance, word in sorted(distances) if distance < len(query)]
+      return matches[:n]
+  
+  find_close_match = get_close_matches(name, list_of_all_Places,n=3)
+  
+  close_match = find_close_match[0]
+ 
+  index_of_the_Des=data.index[data['City']==close_match]
+  index_of_the_Des=index_of_the_Des[0]
+  index_of_the_Des
+
+  similarity_score = list(enumerate(similarity[index_of_the_Des]))
+
+  Sugg = sorted(similarity_score, key = lambda x:x[1], reverse = True) 
+  
+  display('You would also Like : \n')
+  i = 1
+  for D in Sugg:
+    index = D[0]
+    Places_from_index = data[data.index==index]['Place'].values[0]
+    City_from_index = data[data.index==index]['City'].values[0]
+    if (i<51):
+      display( Places_from_index )
+      i+=1
+
+
+
+-->
