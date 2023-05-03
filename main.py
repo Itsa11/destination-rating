@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from pyodide.http import open_url 
 
-data = pd.read_csv(open_url("https://raw.githubusercontent.com/Aditya-Holkar/destiny/main/Destiny.csv"))
+data = pd.read_csv(open_url("https://raw.githubusercontent.com/Itsa11/destination-rating/main/Destiny2.csv"))
 # data['Raw_Rating']=data['Rating'].map({5:'gol',4:'bas',3:'dex',2:'fuk',1:'wil'})
 # data=data.drop(columns='Unnamed: 0.1')
 # data=data.drop(columns='Unnamed: 0')
